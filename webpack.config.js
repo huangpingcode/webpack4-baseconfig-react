@@ -3,9 +3,7 @@ const applyMockMiddleware = require("./applyMockMiddleware")
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 // console.log("process.env.NODE_ENV", process.env)
-function fds() {
 
-}
 let webpackConfig = {
     // mode: 'production', // development
     // publicPath: '',
