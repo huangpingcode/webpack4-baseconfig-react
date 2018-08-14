@@ -1,4 +1,6 @@
-
+/**
+ * 参考了 webpack-api-mocker 的写法
+ */
 module.exports = {
     "/app.json": {
         success: true,

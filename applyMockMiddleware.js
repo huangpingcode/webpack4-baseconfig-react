@@ -5,10 +5,10 @@ const assert = require('assert')
 
 async function ApplyMockMiddleware(app) {
     // console.log("\n================ MockServerMiddleware start =======================")
-    app.use("/", function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*")
-        next()
-    })
+    // app.use("/", function (req, res, next) {
+    //     res.header("Access-Control-Allow-Origin", "*")
+    //     next()
+    // })
     let list = await getMockList("./mock").catch(error => {
         consoel.log("MockServerMiddleware getMockList Error: \n   ", error)
         return []
@@ -28,11 +28,10 @@ function applyMockRoute(app, mock) {
     if (typeof mock.handleRes === 'function') {
         app[mock.method](mock.path, mock.handleRes)
     } else {
-        app[mock.method](mock.path, createHandleMock(mock.handleRes))
+        app[mock.method](mock.path, (handle) => ((req, res) => {
+            res.json(handle)
+        })(mock.handleRes))
     }
-}
-let createHandleMock = handle => (req, res) => {
-    res.json(handle)
 }
 
 async function getMockList(path) {

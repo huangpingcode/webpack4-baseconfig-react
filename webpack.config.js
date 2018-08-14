@@ -4,10 +4,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 // console.log("process.env.NODE_ENV", process.env)
 
-let webpackConfig = {
+let webpackBaseConfig = {
     // mode: 'production', // development
     // publicPath: '',
-    devtool: 'source-map',
     entry: {
         app: './src/index'
         // common: ["./src/common/util.js", "./src/common/constant.js", "./src/common/eventEmitter.js",
@@ -43,9 +42,9 @@ let webpackConfig = {
             // }
         ]
     },
-    optimization: {
-        // minimizer: true,    // 压缩
-    },
+    // optimization: {
+    //     // minimizer: true,    // 压缩
+    // },
     resolve: {
         extensions: ['.js', '.jsx', '.json']        // 自动补全文件后缀
     },
@@ -55,19 +54,38 @@ let webpackConfig = {
             filename: "[name].[chunkhash:8].css",
             chunkFilename: "[id].css"
         })
-    ],
-    devServer: {
-        host: '0.0.0.0',
-        port: '3000',
-        hot: true,
-        // contentBase: "",
-        before: function (app) {
-            applyMockMiddleware(app)
-        }
-    }
+    ]
 }
 // setTimeout(() => {
 //     process.exit(0)
 // }, 5000);
+let fs = require("fs")
+module.exports = function (env, argv) {
+    let webpackConfig = {}
+    if ((env && env.production) || argv.mode === "production") {
+        webpackConfig = Object.assign(webpackConfig, webpackBaseConfig, {
 
-module.exports = webpackConfig
+        })
+    }
+    else {
+        webpackConfig = Object.assign(webpackConfig, webpackBaseConfig, {
+            devtool: 'source-map',
+            devServer: {
+                host: '0.0.0.0',
+                port: '3000',
+                hot: true,
+                // contentBase: "",
+                before: function (app) {
+                    applyMockMiddleware(app)
+                },
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                }
+            }
+        })
+    }
+
+    return new Promise((resolve, reject) => {
+        resolve(webpackConfig)
+    })
+} 

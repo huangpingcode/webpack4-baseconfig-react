@@ -1,0 +1,21 @@
+.aaa {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.aaa.fdsf {
+  color: #fff;
+  background: url(img/67a14c0d.jpg) no-repeat center;
+}
+
+.bbb {
+    -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+}
+
+.bbb.fdsf {
+    color: #fff;
+}
+
+/*# sourceMappingURL=app.92d8eff0.css.map*/
