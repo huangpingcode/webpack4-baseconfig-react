@@ -50,7 +50,8 @@ module.exports = function (env, argv) {
     },
     externals: {
       'jquery': 'window.jQuery',
-      "react": 'window.React'
+      "react": 'window.React',
+      "react-dom": 'window.ReactDOM',
     },
     plugins: [
       new CleanWebpackPlugin(['dist']),
